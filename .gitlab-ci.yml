@@ -1,0 +1,4 @@
+include:
+  - project: "tychodev1/gitlab-coe/pipeline-templates"
+    file: "/templates/Build-Image.gitlab-ci.yml"
+    ref: main
