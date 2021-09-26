@@ -14,6 +14,8 @@ RUN yum -y update \
     && yum -y install python39:3.9 \
     && yum -y clean all --enablerepo='*'
 
+RUN sudo alternatives --set python /usr/bin/python39
+
 #USER 1001
 
-CMD ["python3.9", "--version"]
+CMD ["python", "--version"]
