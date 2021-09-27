@@ -16,7 +16,8 @@ RUN yum -y update \
 #RUN alternatives --set python /usr/bin/python39 \
 #    && alternatives --set pip /usr/bin/pip3
 
-RUN alternatives --install /usr/bin/python python /usr/bin/python3
+RUN alternatives --install /usr/bin/python python /usr/bin/python39
+RUN alternatives --config python 
 
 #USER 1001
 
