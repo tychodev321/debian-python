@@ -1,5 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4
-#FROM redhat/ubi8:8.4
+# FROM redhat/ubi8/ubi-minimal:8.4
+
 LABEL MAINTAINER "Steven Romero <cloud.ops@tychodev.com>"
 
 ARG gitlab_pip_token
@@ -18,10 +19,10 @@ ENV PYTHON_VERSION=3.9 \
 RUN microdnf install -y python39 \
     && microdnf clean all
 
-#RUN pip3 install poetry \
-#    && poetry config virtualenvs.create false \
-#    && poetry config http-basic.gitlab ${GITLAB_PIP_USER} ${GITLAB_PIP_TOKEN} \
+RUN pip3 install poetry \
+    && poetry config virtualenvs.create false \
+    && poetry config http-basic.gitlab ${GITLAB_PIP_USER} ${GITLAB_PIP_TOKEN} \
 
 #USER 1001
 
-RUN python --version && pip3 --version
+RUN python3 --version && pip3 --version
