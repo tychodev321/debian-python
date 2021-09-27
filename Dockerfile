@@ -6,8 +6,6 @@ ENV PYTHON_VERSION=3.9 \
     PATH=$HOME/.local/bin/:$PATH \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=UTF-8 \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
     PIP_NO_CACHE_DIR=off
 
 RUN yum -y update \
@@ -15,8 +13,10 @@ RUN yum -y update \
     && yum -y clean all --enablerepo='*' \
     && yum --disableplugin=subscription-manager clean all
 
-RUN sudo alternatives --set python /usr/bin/python39
+RUN alternatives --set python /usr/bin/python39 \
+    && alternatives --set pip /usr/bin/pip3
 
 #USER 1001
 
 CMD ["python", "--version"]
+CMD ["pip", "--version"]
