@@ -18,5 +18,4 @@ RUN yum -y update \
 
 #USER 1001
 
-CMD ["python3", "--version"]
-CMD ["pip3", "--version"]
+RUN python3 --version && pip3 --version
