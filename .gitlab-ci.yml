@@ -5,3 +5,4 @@ include:
 
 variables:
   BUILD_IMAGE: "true"
+  CONTAINER_RELEASE_IMAGE: $CI_PROJECT_NAME-3.9:latest
