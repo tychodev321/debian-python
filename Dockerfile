@@ -15,7 +15,7 @@ ENV PYTHON_VERSION=3.9 \
 # MicroDNF is recommended over YUM for Building Container Images
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
 
-RUN microdnf install -y python39-pip \
+RUN microdnf install -y python39 \
     && microdnf clean all
 
 #RUN pip3 install poetry \
@@ -24,4 +24,4 @@ RUN microdnf install -y python39-pip \
 
 #USER 1001
 
-RUN python --version && pip --version
+RUN python --version && pip3 --version
