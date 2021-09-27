@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.4
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4
 #FROM redhat/ubi8:8.4
 LABEL MAINTAINER "Steven Romero <cloud.ops@tychodev.com>"
 
