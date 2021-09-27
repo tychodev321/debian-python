@@ -13,11 +13,7 @@ RUN yum -y update \
     && yum -y clean all --enablerepo='*' \
     && yum --disableplugin=subscription-manager clean all
 
-#RUN alternatives --set python /usr/bin/python39 \
-#    && alternatives --set pip /usr/bin/pip3
-
-RUN alternatives --install /usr/bin/python python /usr/bin/python39
-RUN alternatives --config python 
+RUN whereis python
 
 #USER 1001
 
