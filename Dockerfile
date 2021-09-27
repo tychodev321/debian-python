@@ -12,16 +12,17 @@ ENV PYTHON_VERSION=3.9 \
     PYTHONIOENCODING=UTF-8 \
     PIP_NO_CACHE_DIR=off
 
-RUN yum -y update \
-    && yum -y install python39 \
-    && yum -y clean all --enablerepo='*' \
-    && yum --disableplugin=subscription-manager clean all
+# MicroDNF is recommended over YUM for Building Container Images
+# https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
 
-RUN pip3 install poetry \
-    && poetry config virtualenvs.create false \
-    && poetry config http-basic.gitlab ${GITLAB_PIP_USER} ${GITLAB_PIP_TOKEN} \
-    && poetry install
+RUN microdnf install -y python39 \
+    && microdnf clean all
+
+#RUN pip3 install poetry \
+#    && poetry config virtualenvs.create false \
+#    && poetry config http-basic.gitlab ${GITLAB_PIP_USER} ${GITLAB_PIP_TOKEN} \
 
 #USER 1001
 
+RUN python --version && pip --version
 RUN python3 --version && pip3 --version
