@@ -2,6 +2,10 @@ FROM registry.access.redhat.com/ubi8/ubi:8.4
 #FROM redhat/ubi8:8.4
 LABEL MAINTAINER "Steven Romero <cloud.ops@tychodev.com>"
 
+ARG gitlab_pip_token
+ENV GITLAB_PIP_TOKEN=$gitlab_pip_token
+ENV GITLAB_PIP_USER=__token__
+
 ENV PYTHON_VERSION=3.9 \
     PATH=$HOME/.local/bin/:$PATH \
     PYTHONUNBUFFERED=1 \
@@ -13,7 +17,10 @@ RUN yum -y update \
     && yum -y clean all --enablerepo='*' \
     && yum --disableplugin=subscription-manager clean all
 
-RUN whereis python
+RUN pip3 install poetry \
+    && poetry config virtualenvs.create false \
+    && poetry config http-basic.gitlab ${GITLAB_PIP_USER} ${GITLAB_PIP_TOKEN} \
+    && poetry install
 
 #USER 1001
 
