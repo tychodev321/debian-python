@@ -1,5 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi:8.4
 #FROM redhat/ubi8:8.4
+LABEL MAINTAINER "Steven Romero <cloud.ops@tychodev.com>"
 
 ENV PYTHON_VERSION=3.9 \
     PATH=$HOME/.local/bin/:$PATH \
@@ -10,9 +11,9 @@ ENV PYTHON_VERSION=3.9 \
     PIP_NO_CACHE_DIR=off
 
 RUN yum -y update \
-    && yum -y install \
-    && yum -y install python39:3.9 \
-    && yum -y clean all --enablerepo='*'
+    && yum -y install python39 \
+    && yum -y clean all --enablerepo='*' \
+    && yum --disableplugin=subscription-manager clean all
 
 RUN sudo alternatives --set python /usr/bin/python39
 
