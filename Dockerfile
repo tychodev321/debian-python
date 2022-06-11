@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.0.0
 
 LABEL maintainer=""
 
-ENV PYTHON_VERSION=3.9 \
+ENV PYTHON_VERSION=3 \
     PATH=$HOME/.local/bin/:$PATH \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=UTF-8 \
@@ -13,12 +13,14 @@ ENV PYTHON_VERSION=3.9 \
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
 
 RUN microdnf update -y \
-    && microdnf install -y python39 \
+    && microdnf install -y python${PYTHON_VERSION} \
+    && microdnf install -y python${PYTHON_VERSION}-pip \
     && microdnf clean all \
     && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
 
-RUN pip install poetry
-RUN python --version && pip --version
+# Make sure to upgrade pip3
+RUN pip3 install --upgrade pip && pip3 install poetry
+RUN python3 --version && pip3 --version
 
 # USER 1001
 
