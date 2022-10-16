@@ -28,6 +28,7 @@ ENV PATH=/root/.local/bin:$PATH
 
 RUN pipx install poetry==${POETRY_VERSION} \
     && poetry add certifi=2022.06.15.2
+    
 RUN python3 --version && pip3 --version
 
 # USER 1001
