@@ -7,7 +7,8 @@ ENV PYTHON_VERSION=3 \
     PATH=$HOME/.local/bin/:$PATH \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=UTF-8 \
-    PIP_NO_CACHE_DIR=off
+    PIP_NO_CACHE_DIR=off \
+    POETRY_VERSION=1.2.0
 
 # MicroDNF is recommended over YUM for Building Container Images
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
@@ -19,7 +20,13 @@ RUN microdnf update -y \
     && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
 
 # Make sure to upgrade pip3
-RUN pip3 install --upgrade pip && pip3 install poetry
+RUN pip3 install --upgrade pip \ 
+    && python3 -m pip install --user pipx \
+    && python3 -m pipx ensurepath --force
+
+ENV PATH=/root/.local/bin:$PATH
+
+RUN pipx install poetry==${POETRY_VERSION}
 RUN python3 --version && pip3 --version
 
 # USER 1001
