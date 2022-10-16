@@ -8,7 +8,7 @@ ENV PYTHON_VERSION=3 \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=UTF-8 \
     PIP_NO_CACHE_DIR=off \
-    POETRY_VERSION=1.1.15
+    POETRY_VERSION=1.2.0
 
 # MicroDNF is recommended over YUM for Building Container Images
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
@@ -26,7 +26,8 @@ RUN pip3 install --upgrade pip \
 
 ENV PATH=/root/.local/bin:$PATH
 
-RUN pipx install poetry==${POETRY_VERSION}
+RUN pipx install poetry==${POETRY_VERSION} \
+    && poetry add certifi=2022.06.15.2
 RUN python3 --version && pip3 --version
 
 # USER 1001
