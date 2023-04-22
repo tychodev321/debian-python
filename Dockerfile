@@ -16,7 +16,6 @@ RUN apt update -y && apt upgrade -y \
     && apt install -y tar \
     && apt install -y wget \
     && apt install -y curl \
-    && apt install y sudo \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/*
 
