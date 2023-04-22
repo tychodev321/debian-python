@@ -1,5 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.0.0
-# FROM redhat/ubi9/ubi-minimal:9.0.0
+FROM ubuntu:22.10
 
 LABEL maintainer=""
 
@@ -10,23 +9,15 @@ ENV PYTHON_VERSION=3.10.10 \
     PIP_NO_CACHE_DIR=off \
     POETRY_VERSION=1.2.2
 
-# MicroDNF is recommended over YUM for Building Container Images
-# https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
-
-# Install Tools
-RUN microdnf update -y \
-    && microdnf install -y git \
-    && microdnf clean all \
-    && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
-
-# Install the latest version of Python
-RUN microdnf update -y \
-    && microdnf install -y python${PYTHON_VERSION} \
-    && microdnf install -y python${PYTHON_VERSION}-devel \
-    && microdnf install -y python${PYTHON_VERSION}-setuptools \
-    && microdnf install -y python${PYTHON_VERSION}-pip \
-    && microdnf clean all \
-    && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
+# Install Base Tools
+RUN apt update -y && apt upgrade -y \
+    && apt install -y unzip \
+    && apt install -y gzip \
+    && apt install -y tar \
+    && apt install -y wget \
+    && apt install -y curl \
+    && apt clean -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Configure Python
 ENV PATH=/root/.local/bin:$PATH
@@ -39,8 +30,7 @@ RUN python -m pip install --user pipx \
 RUN echo "python version: $(python --version)" \
     && echo "pip version - $(python -m pip --version)" \
     && echo "poetry about: $(poetry about)" \
-    && echo "git version: $(git --version)" \
-    && microdnf repolist
+    && echo "git version: $(git --version)"
 
 # USER 1001
 
