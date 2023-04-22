@@ -24,12 +24,12 @@ RUN apt update -y && apt upgrade -y \
 ENV PATH=/root/.local/bin:$PATH
 
 # Install pipx and poetry
-RUN python -m pip install --user pipx \
+RUN python -m pip3 install --user pipx \
     && python -m pipx ensurepath --force \
     && pipx install poetry==${POETRY_VERSION}
 
 RUN echo "python version: $(python --version)" \
-    && echo "pip version - $(python -m pip --version)" \
+    && echo "pip version - $(python -m pip3 --version)" \
     && echo "poetry about: $(poetry about)" \
     && echo "git version: $(git --version)"
 
