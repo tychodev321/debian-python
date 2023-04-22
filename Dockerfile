@@ -23,6 +23,7 @@ RUN apt update -y && apt upgrade -y \
 RUN apt update -y && apt upgrade -y \
     && apt install -y python3-pip \
     && apt install -y python3-venv \
+    && apt install -y python3-setuptools \
     && apt install -y python-is-python3 \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/*
