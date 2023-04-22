@@ -17,6 +17,14 @@ RUN apt update -y && apt upgrade -y \
     && apt install -y wget \
     && apt install -y curl \
     && apt install -y python-is-python3 \
+    && apt install -y python3-pip \
+    && apt clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python
+RUN apt update -y && apt upgrade -y \
+    && apt install -y python3-pip \
+    && apt install -y python-is-python3 \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,12 +32,12 @@ RUN apt update -y && apt upgrade -y \
 ENV PATH=/root/.local/bin:$PATH
 
 # Install pipx and poetry
-RUN python -m pip3 install --user pipx \
+RUN python -m pip install --user pipx \
     && python -m pipx ensurepath --force \
     && pipx install poetry==${POETRY_VERSION}
 
 RUN echo "python version: $(python --version)" \
-    && echo "pip version - $(python -m pip3 --version)" \
+    && echo "pip version - $(python -m pip --version)" \
     && echo "poetry about: $(poetry about)" \
     && echo "git version: $(git --version)"
 
