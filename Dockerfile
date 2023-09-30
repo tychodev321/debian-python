@@ -1,4 +1,5 @@
-FROM ubuntu:22.10
+# https://hub.docker.com/_/python
+FROM python:3.10.10-slim
 
 LABEL maintainer=""
 
@@ -8,26 +9,6 @@ ENV PYTHON_VERSION=3.10.10 \
     PYTHONIOENCODING=UTF-8 \
     PIP_NO_CACHE_DIR=off \
     POETRY_VERSION=1.2.2
-
-# Install Base Tools
-RUN apt update -y && apt upgrade -y \
-    && apt install -y unzip \
-    && apt install -y gzip \
-    && apt install -y tar \
-    && apt install -y wget \
-    && apt install -y curl \
-    && apt install -y git \
-    && apt clean -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python
-RUN apt update -y && apt upgrade -y \
-    && apt install -y python3-pip \
-    && apt install -y python3-venv \
-    && apt install -y python3-setuptools \
-    && apt install -y python-is-python3 \
-    && apt clean -y \
-    && rm -rf /var/lib/apt/lists/*
 
 # Configure Python
 ENV PATH=/root/.local/bin:$PATH
@@ -39,8 +20,7 @@ RUN python -m pip install --user pipx \
 
 RUN echo "python version: $(python --version)" \
     && echo "pip version - $(python -m pip --version)" \
-    && echo "poetry about: $(poetry about)" \
-    && echo "git version: $(git --version)"
+    && echo "poetry about: $(poetry about)"
 
 # USER 1001
 
